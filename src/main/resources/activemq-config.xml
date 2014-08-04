@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://activemq.apache.org/schema/core http://activemq.apache.org/schema/core/activemq-core.xsd"
+	xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<!-- Allows us to use system properties as variables in this configuration 
+		file -->
+	<bean
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer" />
+
+	<broker useJmx="true" brokerName="myBroker" useShutdownHook="false"
+		xmlns="http://activemq.apache.org/schema/core">
+
+		<destinations>
+			<queue physicalName="orderQueue"/>
+		</destinations>
+
+		<plugins>
+			<bean id="WebLogicSecurity"
+				class="by.creepid.integration.activemq.weblogic.ActiveMQToWebLogicSecurity"
+				xmlns="http://www.springframework.org/schema/beans">
+				<property name="authorizedGroup" value="ActiveMQGroup" />
+			</bean>
+		</plugins>
+
+		<!-- Register all ActiveMQ MBeans with the WebLogic runtime MBeanServer -->
+		<managementContext>
+			<managementContext>
+				<MBeanServer>
+					<bean class="org.springframework.jndi.JndiObjectFactoryBean"
+						xmlns="http://www.springframework.org/schema/beans">
+						<property name="jndiName" value="java:comp/env/jmx/runtime" />
+						<property name="lookupOnStartup" value="true" />
+						<property name="expectedType" value="javax.management.MBeanServer" />
+					</bean>
+				</MBeanServer>
+			</managementContext>
+		</managementContext>
+
+		<persistenceAdapter>
+			<kahaDB directory="${wl.domain.home}/activemq/kahadb" />
+			<!-- By default, use an embedded Derby database -->
+			<!-- <journaledJDBC journalLogFiles="5" dataDirectory="D:/workspace/WLS_domain/base_domain/activemq" 
+				/> -->
+			<!-- Use this with the WebLogicDataSource below to use a WebLogic database 
+				connection pool instead of the embedded Derby database <journaledJDBC journalLogFiles="5" 
+				dataDirectory="/server/bea/weblogic920/domains/jms/activemq-data" dataSource="#WebLogicDataSource" 
+				/> -->
+		</persistenceAdapter>
+
+		<transportConnectors>
+			<transportConnector name="myBrokerTCP" uri="tcp://0.0.0.0:61616" />
+		</transportConnectors>
+
+	</broker>
+
+
+
+	<!-- Uncomment and configure this if you want to use a WebLogic database 
+		connection pool for persistent messages <bean id="WebLogicDataSource" class="org.springframework.jndi.JndiObjectFactoryBean"><property 
+		name="jndiName" value="db/pool/jndi/name"/></bean> -->
+</beans> 

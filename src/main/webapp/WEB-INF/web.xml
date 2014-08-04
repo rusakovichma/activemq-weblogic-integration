@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	id="WebApp_ID" version="2.5">
+
+	<display-name>activemq-weblogic</display-name>
+
+	<!-- Location of the Log4J config file; either a "classpath:" location (e.g. 
+		"classpath:myLog4j.properties"), an absolute file URL (e.g. "file:C:/log4j.properties), 
+		or a plain path relative to the web application root directory (e.g. "/WEB-INF/log4j.properties"). 
+		If not specified, default Log4J initialization will apply ("log4j.properties" 
+		in the class path; see Log4J documentation for details). -->
+	<context-param>
+		<param-name>log4jConfigLocation</param-name>
+		<param-value>file:${log4j.config}</param-value>
+	</context-param>
+	<!-- Whether the web app root system property should be exposed, allowing 
+		for log file paths relative to the web application root directory. Default 
+		is "true"; specify "false" to suppress expose of the web app root system 
+		property. See below for details on how to use this system property in log 
+		file locations. -->
+	<context-param>
+		<param-name>log4jExposeWebAppRoot</param-name>
+		<param-value>false</param-value>
+	</context-param>
+
+
+	<!-- - Location of the XML file that defines the root application context. 
+		- Applied by ContextLoaderListener. -->
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>classpath:spring/application-config.xml</param-value>
+	</context-param>
+
+	<listener>
+		<listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
+	</listener>
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+
+</web-app>

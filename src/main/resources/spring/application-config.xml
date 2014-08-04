@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<!-- Uncomment and add your base-package here: <context:component-scan base-package="org.springframework.samples.service"/> -->
+
+	<bean id="brokerService" class="org.apache.activemq.xbean.BrokerFactoryBean">
+		<property name="config" value="classpath:activemq-config.xml" />
+	</bean>
+
+	<import resource="classpath:spring/order-config.xml" />
+
+	<bean id="orderService" class="by.creepid.integration.activemq.weblogic.producer.OrderService" />
+	<bean id="orderSender" class="by.creepid.integration.activemq.weblogic.producer.OrderSender" />
+
+</beans>
