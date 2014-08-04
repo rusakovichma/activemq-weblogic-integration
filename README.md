@@ -19,6 +19,7 @@ Users -> add user "ActiveMQUser" and set for him group `ActiveMQGroup`
 	</property>
 </bean>
 ```
+
 4. Set domain settings in `activemq-weblogic/pom.xml`:<br/>
 ```xml
 <properties>
@@ -31,6 +32,7 @@ Users -> add user "ActiveMQUser" and set for him group `ActiveMQGroup`
 	<log4j.config>${wl.domain.home}/config/log4j.properties</log4j.config>
 </properties>
 ```
+
 5. Change if need group in `activemq-weblogic\src\main\resources\activemq-config.xml`:<br/>
 ```xml
 <plugins>
@@ -41,6 +43,7 @@ Users -> add user "ActiveMQUser" and set for him group `ActiveMQGroup`
 	</bean>
 </plugins>
 ```
+
 6. Persistence settings `activemq-weblogic\src\main\resources\activemq-config.xml`:
 ```xml
 <persistenceAdapter>
@@ -55,4 +58,4 @@ Users -> add user "ActiveMQUser" and set for him group `ActiveMQGroup`
 </persistenceAdapter>
 ```
 7. `mvn clean install`
-
+8. Deploy .war: `activemq-weblogic.war` Deployments -> Install
