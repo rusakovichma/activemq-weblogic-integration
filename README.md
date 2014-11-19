@@ -37,7 +37,7 @@ Users -> add user "ActiveMQUser" and set for him group `ActiveMQGroup`
 	```xml
 	<plugins>
 		<bean id="WebLogicSecurity"
-		class="by.topby.integration.activemq.weblogic.ActiveMQToWebLogicSecurity"
+		class="by.creepid.integration.activemq.weblogic.ActiveMQToWebLogicSecurity"
 		xmlns="http://www.springframework.org/schema/beans">
 			<property name="authorizedGroup" value="ActiveMQGroup" />
 		</bean>
